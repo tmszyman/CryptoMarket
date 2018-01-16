@@ -59,8 +59,9 @@ export default class HomeScreen extends React.Component {
         );
         const listCryptocurrencies = this.state.cryptocurrencies.map((cryptocurrency, key) => {
             return (
-                <View key={key}>
+                <View key={key} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 5, paddingBottom: 5 }}>
                     <Text>{cryptocurrency.name}: {cryptocurrency.pricePln} PLN</Text>
+                    <Button title="Kup" />
                 </View>
             );
         });
@@ -69,13 +70,15 @@ export default class HomeScreen extends React.Component {
                 drawerWidth={300}
                 drawerPosition={DrawerLayoutAndroid.positions.Left}
                 renderNavigationView={() => navigationView}>
-                <View>
-                    <Text>Imię: {this.state.player.name}</Text>
-                    <Text>Saldo: 0 PLN</Text>
-                </View>
-                <View>
-                    <View><Text>Aktualne ceny kryptowalut:</Text></View>
-                    {listCryptocurrencies}
+                <View style={{ paddingTop: 15, paddingLeft: 15, paddingRight: 15 }}>
+                    <View>
+                        <Text style={{ fontSize: 20 }}>Imię: {this.state.player.name}</Text>
+                        <Text style={{ fontSize: 20 }}>Saldo: 0 PLN</Text>
+                    </View>
+                    <View style={{ marginTop: 20 }}>
+                        <View style={{ marginBottom: 10 }}><Text style={{ fontSize: 18, fontWeight: '500' }}>Kryptowaluty</Text></View>
+                        {listCryptocurrencies}
+                    </View>
                 </View>
             </DrawerLayoutAndroid>
         );
@@ -101,7 +104,7 @@ export default class HomeScreen extends React.Component {
         cryptocurrencies.map((cryptocurrency, key) => {
             cryptocurrenciesApiData.map((cryptocurrencyApiData, key) => {
                 if (cryptocurrency.name == cryptocurrencyApiData.name) {
-                    
+
                     cryptocurrency.pricePln = cryptocurrencyApiData.price_pln;
                     cryptocurrency.updatedDate = new Date(cryptocurrencyApiData.last_updated * 1000);
 
