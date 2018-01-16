@@ -5,6 +5,7 @@ import {
 } from 'react-navigation';
 import WelcomeScreen from './components/WelcomeScreen';
 import HomeScreen from './components/HomeScreen';
+import BuyCurrencyScreen from './components/BuyCurrencyScreen';
 
 export default class App extends React.Component {
 	constructor(props) {
@@ -12,7 +13,8 @@ export default class App extends React.Component {
 	}
 	render() {
 
-		const App = StackNavigator({
+		const App = StackNavigator(
+			{
 			Welcome: { screen: WelcomeScreen },
 			Home: {
 				screen: HomeScreen,	
@@ -20,6 +22,7 @@ export default class App extends React.Component {
 					headerLeft: null
 				}
 			},
+			BuyCurrency: { screen: BuyCurrencyScreen }
 		});
 
 		return (

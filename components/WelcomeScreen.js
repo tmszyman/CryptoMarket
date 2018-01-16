@@ -9,16 +9,18 @@ export default class WelcomeScreen extends React.Component {
         };
     }
 
-    static navigationOptions = {
-        title: 'Witaj',
-    }
+    static navigationOptions =
+        {
+            title: 'Witaj',
+        }
 
     render() {
-        const navigationView = (
-            <View style={{ backgroundColor: '#fff' }}>
-                <Text style={{ margin: 10, fontSize: 15, textAlign: 'left' }}> who I'm in the Drawer!</Text>
-            </View>
-        );
+        const navigationView =
+            (
+                <View style={{ backgroundColor: '#fff' }}>
+                    <Text style={{ margin: 10, fontSize: 15, textAlign: 'left' }}> I'm in the Drawer!!</Text>
+                </View>
+            );
 
         const { navigate } = this.props.navigation;
 
@@ -45,11 +47,10 @@ export default class WelcomeScreen extends React.Component {
                     />
                     <View style={{ marginTop: 15 }}>
                         <Button
-                            onPress={
-                                () => {
-                                    AsyncStorage.setItem('PlayerName', this.state.text);
-                                    navigate('Home')
-                                }
+                            onPress={() => {
+                                AsyncStorage.setItem('PlayerName', this.state.text);
+                                navigate('Home')
+                            }
                             }
                             title="Zapisz"
                         />

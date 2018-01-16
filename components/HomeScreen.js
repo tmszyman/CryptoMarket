@@ -54,16 +54,27 @@ export default class HomeScreen extends React.Component {
     render() {
         const navigationView = (
             <View style={{ flex: 1, backgroundColor: '#fff' }}>
-                <Text style={{ margin: 10, fontSize: 15, textAlign: 'left' }}>I'm in the Drawer!</Text>
+                <Text style={{ margin: 10, fontSize: 15, textAlign: 'left' }}>I'm in the Drawer!!</Text>
             </View>
         );
+        const { navigate } = this.props.navigation;
         const listCryptocurrencies = this.state.cryptocurrencies.map((cryptocurrency, key) => {
-            return (
-                <View key={key} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 5, paddingBottom: 5 }}>
-                    <Text>{cryptocurrency.name}: {cryptocurrency.pricePln} PLN</Text>
-                    <Button title="Kup" />
+            return (      
+                <View key={key} style={{ /*flexDirection: 'row',*/ justifyContent: 'space-between', alignItems: 'center', paddingTop: 5, paddingBottom: 5 }}>
+                    <Text style={{ flexDirection: 'row' }}> {cryptocurrency.name}: {cryptocurrency.pricePln} PLN </Text>
+                    <Button
+                    onPress={() => {
+                        navigate('BuyCurrency')
+                    }
+                    }
+                    
+                    title="Kup" 
+                    />          
+                    <Text style={{ flexDirection: 'row' }}>Last updated: {cryptocurrency.updatedDate.getHours().toString()}:{cryptocurrency.updatedDate.getMinutes().toString()}:{cryptocurrency.updatedDate.getSeconds().toString()}</Text>  
                 </View>
+                
             );
+            
         });
         return (
             <DrawerLayoutAndroid
