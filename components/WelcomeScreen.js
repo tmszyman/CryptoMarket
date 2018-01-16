@@ -47,7 +47,7 @@ export default class WelcomeScreen extends React.Component {
                         <Button
                             onPress={
                                 () => {
-                                    AsyncStorage.setItem('Name', this.state.text);
+                                    AsyncStorage.setItem('PlayerName', this.state.text);
                                     navigate('Home')
                                 }
                             }

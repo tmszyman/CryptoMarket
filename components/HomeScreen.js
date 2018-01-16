@@ -5,8 +5,41 @@ export default class HomeScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: '',
-            bitcoinPrice: 0
+            player: {
+                name: '',
+            },
+            cryptocurrencies: [
+                {
+                    name: 'Bitcoin',
+                    pricePln: 0,
+                    updatedDate: new Date()
+                },
+                {
+                    name: 'Ethereum',
+                    pricePln: 0,
+                    updatedDate: new Date()
+                },
+                {
+                    name: 'Ripple',
+                    pricePln: 0,
+                    updatedDate: new Date()
+                },
+                {
+                    name: 'Litecoin',
+                    pricePln: 0,
+                    updatedDate: new Date()
+                },
+                {
+                    name: 'IOTA',
+                    pricePln: 0,
+                    updatedDate: new Date()
+                },
+                {
+                    name: 'Lisk',
+                    pricePln: 0,
+                    updatedDate: new Date()
+                }
+            ]
         };
     }
 
@@ -16,7 +49,6 @@ export default class HomeScreen extends React.Component {
 
     componentWillMount() {
         this.getData();
-
     }
 
     render() {
@@ -25,35 +57,60 @@ export default class HomeScreen extends React.Component {
                 <Text style={{ margin: 10, fontSize: 15, textAlign: 'left' }}>I'm in the Drawer!</Text>
             </View>
         );
+        const listCryptocurrencies = this.state.cryptocurrencies.map((cryptocurrency, key) => {
+            return (
+                <View key={key}>
+                    <Text>{cryptocurrency.name}: {cryptocurrency.pricePln} PLN</Text>
+                </View>
+            );
+        });
         return (
             <DrawerLayoutAndroid
                 drawerWidth={300}
                 drawerPosition={DrawerLayoutAndroid.positions.Left}
                 renderNavigationView={() => navigationView}>
                 <View>
-                    <Text>Imię: {this.state.text}</Text>
-                    <Text>Bitcoin: {this.state.bitcoinPrice} PLN</Text>
-                    <Text>Saldo: 0</Text>
+                    <Text>Imię: {this.state.player.name}</Text>
+                    <Text>Saldo: 0 PLN</Text>
+                </View>
+                <View>
+                    <View><Text>Aktualne ceny kryptowalut:</Text></View>
+                    {listCryptocurrencies}
                 </View>
             </DrawerLayoutAndroid>
         );
     }
 
     async getData() {
-        const value = await AsyncStorage.getItem('Name');
+        const playerName = await AsyncStorage.getItem('PlayerName');
 
         this.setState({
-            text: value
+            player: {
+                name: playerName
+            }
         });
 
-        let response = await fetch(
-            'https://api.coinmarketcap.com/v1/ticker/bitcoin/?convert=PLN'
+        const cryptocurrenciesApiResponse = await fetch(
+            'https://api.coinmarketcap.com/v1/ticker/?convert=PLN'
         );
 
-        let responseJson = await response.json();
+        const cryptocurrenciesApiData = await cryptocurrenciesApiResponse.json();
+
+        const cryptocurrencies = [...this.state.cryptocurrencies];
+
+        cryptocurrencies.map((cryptocurrency, key) => {
+            cryptocurrenciesApiData.map((cryptocurrencyApiData, key) => {
+                if (cryptocurrency.name == cryptocurrencyApiData.name) {
+                    
+                    cryptocurrency.pricePln = cryptocurrencyApiData.price_pln;
+                    cryptocurrency.updatedDate = new Date(cryptocurrencyApiData.last_updated * 1000);
+
+                }
+            });
+        });
 
         this.setState({
-            bitcoinPrice: responseJson[0].price_pln
+            cryptocurrencies: cryptocurrencies
         });
     }
 }
