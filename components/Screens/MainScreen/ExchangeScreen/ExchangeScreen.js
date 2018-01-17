@@ -1,16 +1,19 @@
 import React from 'react';
 import { AsyncStorage, StyleSheet, Text, View, TextInput, Button, ScrollView } from 'react-native';
+import {
+    StackNavigator, TabNavigator
+} from 'react-navigation';
 import moment from 'moment/src/moment';
 
-export default class ExchangeTab extends React.Component {
+export default class ExchangeScreen extends React.Component {
     constructor(props) {
         super(props);
     }
 
     static navigationOptions = {
-        tabBarLabel: 'Giełda',
+        title: 'Giełda',
     }
-    
+
     render() {
         const { navigate } = this.props.navigation;
 

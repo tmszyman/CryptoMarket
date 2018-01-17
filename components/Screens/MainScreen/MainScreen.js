@@ -1,14 +1,15 @@
 import React from 'react';
-import { AsyncStorage, StyleSheet, Text, View, TextInput, Button, DrawerLayoutAndroid } from 'react-native';
+import { AsyncStorage, StyleSheet, Text, View, TextInput, Button, ScrollView } from 'react-native';
 import {
     StackNavigator, TabNavigator
 } from 'react-navigation';
-import WalletTab from './Tabs/WalletTab/WalletTab';
-import ExchangeTab from './Tabs/ExchangeTab/ExchangeTab';
+import WalletNav from './WalletScreen/WalletNav';
+import ExchangeNav from './ExchangeScreen/ExchangeNav';
 
-export default class HomeScreen extends React.Component {
+export default class MainScreen extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
             player: {
                 name: 'Anon',
@@ -111,53 +112,9 @@ export default class HomeScreen extends React.Component {
         };
     }
 
-    static navigationOptions = {
-        title: 'CryptoMarket',
-    }
-
-    componentWillMount() {
-        this.getData();
-    }
-
-    render() {
-        const TabNav = TabNavigator({
-            Wallet: {
-                screen: WalletTab,
-            },
-            Exchange: {
-                screen: ExchangeTab
-            },
-        }, {
-                tabBarPosition: 'top',
-                animationEnabled: true,
-                tabBarOptions: {
-                    upperCaseLabel: false,
-                    labelStyle: {
-                        fontSize: 16,
-                    },
-                    indicatorStyle: {
-                        backgroundColor: '#fff'
-                    },
-                    style: {
-                        backgroundColor: '#20232a',
-                        elevation: 0
-                    },
-                },
-            });
-        return (
-            <TabNav
-                screenProps={this.state} />
-        );
-    }
-
     async getData() {
         const playerName = await AsyncStorage.getItem('PlayerName');
-
-        /*  this.setState({
-             player: {
-                 name: playerName
-             }
-         }); */
+        // to do - set state z imieniem
 
         const cryptocurrenciesApiResponse = await fetch(
             'https://api.coinmarketcap.com/v1/ticker/?convert=PLN'
@@ -183,5 +140,39 @@ export default class HomeScreen extends React.Component {
                 cryptocurrencies: cryptocurrencies
             }
         });
+    }
+
+    componentWillMount() {
+        this.getData();
+    }
+
+    render() {
+        const MainTabNavigator = TabNavigator({
+            Wallet: {
+                screen: WalletNav,
+            },
+            Exchange: {
+                screen: ExchangeNav,
+            },
+        }, {
+                tabBarPosition: 'top',
+                animationEnabled: true,
+                tabBarOptions: {
+                    upperCaseLabel: false,
+                    labelStyle: {
+                        fontSize: 16,
+                    },
+                    indicatorStyle: {
+                        backgroundColor: '#fff'
+                    },
+                    style: {
+                        backgroundColor: '#20232a',
+                        elevation: 0,
+                    },
+                }
+            });
+        return (
+            <MainTabNavigator screenProps={this.state} />
+        );
     }
 }

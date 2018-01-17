@@ -1,13 +1,18 @@
 import React from 'react';
 import { AsyncStorage, StyleSheet, Text, View, TextInput, Button, ScrollView } from 'react-native';
+import {
+    StackNavigator, TabNavigator
+} from 'react-navigation';
 
-export default class WalletTab extends React.Component {
+export default class WalletScreen extends React.Component {
     constructor(props) {
         super(props);
     }
+
     static navigationOptions = {
-        tabBarLabel: 'Portfel',
+        title: 'Portfel',
     }
+
     render() {
         const listCryptocurrencies = this.props.screenProps.player.wallet.cryptocurrencies.map((cryptocurrency, key) => {
             return (
@@ -16,6 +21,7 @@ export default class WalletTab extends React.Component {
                 </View>
             );
         });
+
         return (
             <ScrollView style={{ backgroundColor: '#fff' }}>
                 <View style={{ marginTop: 15 }}>

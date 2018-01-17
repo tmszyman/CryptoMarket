@@ -1,12 +1,16 @@
 import React from 'react';
-import { AsyncStorage, StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { AsyncStorage, StyleSheet, Text, View, TextInput, Button, DrawerLayoutAndroid } from 'react-native';
+import {
+    StackNavigator, TabNavigator
+} from 'react-navigation';
 
 export default class BuyCurrencyScreen extends React.Component {
     constructor(props) {
         super(props);
     }
+
     static navigationOptions = {
-        title: 'Zakup walutę',
+        title: 'Kup kryptowalutę',
     }
 
     render() {
@@ -26,20 +30,22 @@ export default class BuyCurrencyScreen extends React.Component {
 
                     <TextInput
                         style={{ height: 40, marginTop: 15, padding: 10 }}
-                        onChangeText={(text) => this.setState({ text })}
-                        value={this.state.text}
                     />
 
                     <View style={{ marginTop: 15 }}>
                         <Button
-                            onPress={() => {
-                                navigate('Home')
-                            }}
+                            onPress={this.handleBuyCurrencyButton}
                             title="Kup"
                         />
                     </View>
                 </View>
             </View>
         );
+    }
+
+    handleBuyCurrencyButton = () => {
+        // TO DO - BUY LOGIC
+
+        navigate('Exchange');
     }
 }
