@@ -7,6 +7,10 @@ import {
 export default class SellCurrencyScreen extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            amount: 0
+        }
     }
 
     static navigationOptions = {
@@ -14,8 +18,6 @@ export default class SellCurrencyScreen extends React.Component {
     }
 
     render() {
-        const { navigate } = this.props.navigation;
-
         return (
             <View>
                 <View
@@ -30,6 +32,11 @@ export default class SellCurrencyScreen extends React.Component {
 
                     <TextInput
                         style={{ height: 40, marginTop: 15, padding: 10 }}
+                        keyboardType='numeric'
+                        onChangeText={(value) => this.setState({ 
+                            amount: value 
+                        })}
+                        value={this.state.amount}
                     />
 
                     <View style={{ marginTop: 15 }}>
@@ -45,6 +52,10 @@ export default class SellCurrencyScreen extends React.Component {
 
     handleSellCurrencyButton = () => {
         // TO DO - BUY LOGIC
+        const { navigate } = this.props.navigation;
+
+        const amount = this.state.amount;
+
 
         navigate('Exchange');
     }

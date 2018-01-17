@@ -7,15 +7,21 @@ import {
 export default class BuyCurrencyScreen extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            amount: 0
+        }
     }
 
     static navigationOptions = {
         title: 'Kup kryptowalutę',
     }
 
-    render() {
-        const { navigate } = this.props.navigation;
+    componentWillMount() {
+        // to do -zaladowac obiekt player z prefsow
+    }
 
+    render() {
         return (
             <View>
                 <View
@@ -30,6 +36,11 @@ export default class BuyCurrencyScreen extends React.Component {
 
                     <TextInput
                         style={{ height: 40, marginTop: 15, padding: 10 }}
+                        keyboardType='numeric'
+                        onChangeText={(value) => this.setState({ 
+                            amount: value 
+                        })}
+                        value={this.state.amount}
                     />
 
                     <View style={{ marginTop: 15 }}>
@@ -44,7 +55,9 @@ export default class BuyCurrencyScreen extends React.Component {
     }
 
     handleBuyCurrencyButton = () => {
-        // TO DO - BUY LOGIC
+        const { navigate } = this.props.navigation;
+
+        // to do - skopiowac obiekt player, a nastepnie zapisac do prefsow
 
         navigate('Exchange');
     }

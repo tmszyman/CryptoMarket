@@ -143,6 +143,9 @@ export default class MainScreen extends React.Component {
     }
 
     componentWillMount() {
+        // to do - zaladowac obiekt player z prefsow JESLI ISTNIEJE do state tutaj
+        // oczywiscie operujemy na kopiach
+
         this.getData();
     }
 
