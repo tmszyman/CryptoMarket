@@ -9,16 +9,13 @@ export default class BuyCurrencyScreen extends React.Component {
         super(props);
 
         this.state = {
-            amount: 0
+            player: this.props.screenProps.player,
+            amount: ''
         }
     }
 
     static navigationOptions = {
         title: 'Kup kryptowalutę',
-    }
-
-    componentWillMount() {
-        // to do -zaladowac obiekt player z prefsow
     }
 
     render() {
@@ -33,16 +30,14 @@ export default class BuyCurrencyScreen extends React.Component {
                         textAlign: 'center',
                         marginTop: 10
                     }}>Wprowadź ilość</Text>
-
                     <TextInput
                         style={{ height: 40, marginTop: 15, padding: 10 }}
                         keyboardType='numeric'
-                        onChangeText={(value) => this.setState({ 
-                            amount: value 
+                        onChangeText={(value) => this.setState({
+                            amount: value
                         })}
                         value={this.state.amount}
                     />
-
                     <View style={{ marginTop: 15 }}>
                         <Button
                             onPress={this.handleBuyCurrencyButton}
@@ -57,7 +52,24 @@ export default class BuyCurrencyScreen extends React.Component {
     handleBuyCurrencyButton = () => {
         const { navigate } = this.props.navigation;
 
-        // to do - skopiowac obiekt player, a nastepnie zapisac do prefsow
+        const player = { ...this.state.player };
+        const cryptocurrencyName = this.props.navigation.state.params.cryptocurrencyName;
+        const cryptocurrencyPricePln = this.props.navigation.state.params.cryptocurrencyPricePln;
+
+        player.wallet.currencies[0].amount -= (parseInt(this.state.amount) * cryptocurrencyPricePln);
+
+        player.wallet.cryptocurrencies.map((cryptocurrency, key) => {
+            if (cryptocurrency.name == cryptocurrencyName) {
+                cryptocurrency.amount += parseInt(this.state.amount);
+            }
+        });
+
+        this.setState({
+            player: player
+        });
+
+        AsyncStorage.setItem('Player', JSON.stringify(this.state.player));
+        
 
         navigate('Exchange');
     }

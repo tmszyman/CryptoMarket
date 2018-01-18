@@ -23,13 +23,19 @@ export default class ExchangeScreen extends React.Component {
                     <Text style={{ flexDirection: 'row' }}> {cryptocurrency.name}: {cryptocurrency.pricePln} PLN </Text>
                     <Button
                         onPress={() => {
-                            navigate('BuyCurrency')
+                            navigate('BuyCurrency', {
+                                cryptocurrencyName: cryptocurrency.name,
+                                cryptocurrencyPricePln: cryptocurrency.pricePln
+                            })
                         }}
                         title="Kup"
                     />
                     <Button
                         onPress={() => {
-                            navigate('SellCurrency')
+                            navigate('SellCurrency', {
+                                cryptocurrencyName: cryptocurrency.name,
+                                cryptocurrencyPricePln: cryptocurrency.pricePln
+                            })
                         }}
                         title="Sprzedaj"
                     />

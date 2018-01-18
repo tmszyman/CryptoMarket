@@ -9,7 +9,8 @@ export default class SellCurrencyScreen extends React.Component {
         super(props);
 
         this.state = {
-            amount: 0
+            player: this.props.screenProps.player,
+            amount: ''
         }
     }
 
@@ -51,11 +52,27 @@ export default class SellCurrencyScreen extends React.Component {
     }
 
     handleSellCurrencyButton = () => {
-        // TO DO - BUY LOGIC
         const { navigate } = this.props.navigation;
 
-        const amount = this.state.amount;
+        const player = { ...this.state.player };
+        const cryptocurrencyName = this.props.navigation.state.params.cryptocurrencyName;
+        const cryptocurrencyPricePln = this.props.navigation.state.params.cryptocurrencyPricePln;
 
+        player.wallet.currencies[0].amount += (parseInt(this.state.amount) * cryptocurrencyPricePln);
+
+        player.wallet.cryptocurrencies.map((cryptocurrency, key) => {
+            if (cryptocurrency.name == cryptocurrencyName) {
+                cryptocurrency.amount -= parseInt(this.state.amount);
+
+            }
+        });
+
+        this.setState({
+            player: player
+        });
+
+        AsyncStorage.setItem('Player', JSON.stringify(this.state.player));
+        
 
         navigate('Exchange');
     }

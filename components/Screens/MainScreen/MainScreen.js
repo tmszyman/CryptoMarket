@@ -10,71 +10,10 @@ export default class MainScreen extends React.Component {
     constructor(props) {
         super(props);
 
+        const player = { ...this.props.player };
+
         this.state = {
-            player: {
-                name: 'Anon',
-                wallet: {
-                    updatedDate: new Date(),
-                    currencies: [
-                        {
-                            name: 'PLN',
-                            amount: 10000
-                        }
-                    ],
-                    cryptocurrencies: [
-                        {
-                            name: 'Bitcoin',
-                            amount: 0
-                        },
-                        {
-                            name: 'Ethereum',
-                            amount: 0,
-                        },
-                        {
-                            name: 'Ripple',
-                            amount: 0,
-                        },
-                        {
-                            name: 'Litecoin',
-                            amount: 0,
-                        },
-                        {
-                            name: 'IOTA',
-                            amount: 0,
-                        },
-                        {
-                            name: 'Lisk',
-                            amount: 0,
-                        }
-                    ]
-                },
-                transactions: [
-                    {
-                        id: 0,
-                        date: new Date(),
-                        entry: {
-                            currency: {
-                                name: 'PLN',
-                                amount: 0
-                            },
-                            cryptocurrency: {
-                                name: 'Bitcoin',
-                                amount: 0
-                            }
-                        },
-                        exit: {
-                            currency: {
-                                name: 'PLN',
-                                amount: 0
-                            },
-                            cryptocurrency: {
-                                name: 'Bitcoin',
-                                amount: 0
-                            }
-                        }
-                    }
-                ]
-            },
+            player: player,
             exchange: {
                 cryptocurrencies: [
                     {
@@ -112,10 +51,7 @@ export default class MainScreen extends React.Component {
         };
     }
 
-    async getData() {
-        const playerName = await AsyncStorage.getItem('PlayerName');
-        // to do - set state z imieniem
-
+    async componentWillMount() {
         const cryptocurrenciesApiResponse = await fetch(
             'https://api.coinmarketcap.com/v1/ticker/?convert=PLN'
         );
@@ -140,13 +76,7 @@ export default class MainScreen extends React.Component {
                 cryptocurrencies: cryptocurrencies
             }
         });
-    }
 
-    componentWillMount() {
-        // to do - zaladowac obiekt player z prefsow JESLI ISTNIEJE do state tutaj
-        // oczywiscie operujemy na kopiach
-
-        this.getData();
     }
 
     render() {

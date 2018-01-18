@@ -11,34 +11,22 @@ export default class App extends React.Component {
         super(props);
 
         this.state = {
-            isUserCreated: false
+            player: {},
+            playerCreated: false
         };
     }
 
-    launchApp = () => {
+    launchApp = (player) => {
         this.setState({
-            isUserCreated: true
+            player: player,
+            playerCreated: true
         });
     }
 
-    componentWillMount = () => {
-        this.getData();
-    }
-
-    async getData() {
-        const playerName = await AsyncStorage.getItem('PlayerName');
-
-        if (playerName != '') {
-            this.setState({
-                isUserCreated: true
-            });
-        }
-    }
-
     render() {
-        if (this.state.isUserCreated) {
+        if (this.state.playerCreated) {
             return (
-                <MainScreen />
+                <MainScreen player={this.state.player} />
             )
         }
         else {
