@@ -80,14 +80,16 @@ export default class MainScreen extends React.Component {
     }
 
     render() {
-        const MainTabNavigator = TabNavigator({
+        const MainTabNavigator = TabNavigator(
+            {
             Wallet: {
                 screen: WalletNav,
             },
             Exchange: {
                 screen: ExchangeNav,
             },
-        }, {
+            }, 
+            {
                 tabBarPosition: 'top',
                 animationEnabled: true,
                 tabBarOptions: {

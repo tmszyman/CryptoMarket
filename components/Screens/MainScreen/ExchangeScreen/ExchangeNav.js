@@ -42,9 +42,8 @@ export default class ExchangeNav extends React.Component {
                 navigationOptions: additionalNavigationOptions
             },
         });
-
         return (
-            <ExchangeStackNavigator screenProps={this.props.screenProps} />
+            <ExchangeStackNavigator screenProps={this.props.screenProps} />     
         );
     }
 }

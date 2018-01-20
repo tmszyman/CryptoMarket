@@ -19,9 +19,10 @@ export default class ExchangeScreen extends React.Component {
 
         const listCryptocurrencies = this.props.screenProps.exchange.cryptocurrencies.map((cryptocurrency, key) => {
             return (
-                <View key={key} style={{ paddingTop: 5, paddingBottom: 5 }}>
-                    <Text style={{ flexDirection: 'row' }}> {cryptocurrency.name}: {cryptocurrency.pricePln} PLN </Text>
-                    <Button
+                <View key={key} style={{ borderColor: '#ececec', borderWidth: 1, marginVertical: 10, marginHorizontal: 5}}>
+                    <Text style={{ flexDirection: 'row', paddingVertical: 10, textAlign: 'center', borderBottomWidth: 1, borderBottomColor: '#ececec', backgroundColor: 'lightgreen' }}> {cryptocurrency.name}: {cryptocurrency.pricePln} PLN </Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', paddingVertical: 10}}>
+                        <Button style={{ paddingLeft: 5, paddingRight : 5, paddingVertical: 10}}
                         onPress={() => {
                             navigate('BuyCurrency', {
                                 cryptocurrencyName: cryptocurrency.name,
@@ -29,8 +30,8 @@ export default class ExchangeScreen extends React.Component {
                             })
                         }}
                         title="Kup"
-                    />
-                    <Button
+                        />
+                        <Button style={{ paddingLeft: 5, paddingRight: 5, paddingVertical: 10}}
                         onPress={() => {
                             navigate('SellCurrency', {
                                 cryptocurrencyName: cryptocurrency.name,
@@ -38,9 +39,11 @@ export default class ExchangeScreen extends React.Component {
                             })
                         }}
                         title="Sprzedaj"
-                    />
-                    <Text>Updated: {moment(cryptocurrency.updatedDate).format('DD.MM.YYYY, H:mm:ss')}</Text>
+                        />
+                    </View>
+                    <Text style={{ paddingTop: 5, paddingBottom: 5, textAlign: 'center', fontSize: 8}}>Last updated: {moment(cryptocurrency.updatedDate).format('dddd, H:mm:ss')}</Text>
                 </View>
+                
 
             );
         });
