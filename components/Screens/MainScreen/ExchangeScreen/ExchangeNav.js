@@ -27,6 +27,10 @@ export default class ExchangeNav extends React.Component {
         super(props);
     }
 
+    static navigationOptions = {
+        title: 'Giełda',
+    }
+
     render() {
         const ExchangeStackNavigator = StackNavigator({
             Exchange: {

@@ -13,7 +13,11 @@ export default class WalletNav extends React.Component {
     constructor(props) {
         super(props);
     }
-    
+
+    static navigationOptions = {
+        title: 'Portfel',
+    }
+
     render() {
         const WalletStackNavigator = StackNavigator({
             Wallet: {

@@ -101,6 +101,8 @@ export default class MainScreen extends React.Component {
                     style: {
                         backgroundColor: '#20232a',
                         elevation: 0,
+                        borderTopWidth: 24,
+                        borderTopColor: '#20232a'
                     },
                 }
             });

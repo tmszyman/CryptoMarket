@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage, StyleSheet, Text, View, TextInput, Button, DrawerLayoutAndroid } from 'react-native';
+import { AsyncStorage, StyleSheet, Text, View, TextInput, Button, DeviceEventEmitter } from 'react-native';
 import {
     StackNavigator, TabNavigator
 } from 'react-navigation';
@@ -50,7 +50,7 @@ export default class BuyCurrencyScreen extends React.Component {
     }
 
     handleBuyCurrencyButton = () => {
-        const { navigate } = this.props.navigation;
+        const { goBack } = this.props.navigation;
 
         const player = { ...this.state.player };
         const cryptocurrencyName = this.props.navigation.state.params.cryptocurrencyName;
@@ -70,7 +70,8 @@ export default class BuyCurrencyScreen extends React.Component {
 
         AsyncStorage.setItem('Player', JSON.stringify(this.state.player));
         
+        DeviceEventEmitter.emit('refreshWallet',  {});
 
-        navigate('Exchange');
+        goBack();
     }
 }
