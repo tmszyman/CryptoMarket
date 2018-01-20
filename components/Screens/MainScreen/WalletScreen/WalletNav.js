@@ -23,6 +23,7 @@ export default class WalletNav extends React.Component {
         });
 
         return (
+            WalletScreen.refresh(),
             <WalletStackNavigator screenProps={this.props.screenProps} />
         );
     }

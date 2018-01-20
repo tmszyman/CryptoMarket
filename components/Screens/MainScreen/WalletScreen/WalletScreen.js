@@ -16,7 +16,7 @@ export default class WalletScreen extends React.Component {
     static navigationOptions = {
         title: 'Portfel',
     }
-
+    
     render() {
         const listCryptocurrencies = this.state.player.wallet.cryptocurrencies.map((cryptocurrency, key) => {
             return (
@@ -25,7 +25,7 @@ export default class WalletScreen extends React.Component {
                 </View>
             );
         });
-
+           
         return (
             <ScrollView style={{ backgroundColor: '#fff' }}>
                 <View style={{ marginTop: 15 }}>
