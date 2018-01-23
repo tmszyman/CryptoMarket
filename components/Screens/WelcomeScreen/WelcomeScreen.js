@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage, StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { AsyncStorage, StyleSheet, Text, View, Modal,TextInput, Button } from 'react-native';
 
 export default class WelcomeScreen extends React.Component {
     constructor(props) {
@@ -12,7 +12,7 @@ export default class WelcomeScreen extends React.Component {
                     currencies: [
                         {
                             name: 'PLN',
-                            amount: 0
+                            amount: 10000
                         }
                     ],
                     cryptocurrencies: [
@@ -42,17 +42,43 @@ export default class WelcomeScreen extends React.Component {
                         }
                     ]
                 }
-            }
+            },
+            modalVisible: false
         };
     }
 
     static navigationOptions = {
         title: 'Witaj',
     }
+    openModal() {
+        this.setState({ modalVisible: true });
+    }
 
+    closeModal() {
+        this.setState({ modalVisible: false });
+    }
     render() {
         return (
-            <View>
+            <View style={{backgroundColor: 'rgb(233, 233, 239)', flex: 1}}>
+                <Modal
+                    visible={this.state.modalVisible}
+                    animationType={'slide'}
+                    onRequestClose={() => this.closeModal()}
+                    transparent={true}
+                >
+                    <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1, }}>
+                        <View style={{ width: 200, height: 140, backgroundColor: 'white', alignItems: 'center', 
+                                        justifyContent: 'center'}}>
+                            <Text style={{textAlign: 'center', textAlignVertical: 'center', padding:5, margin: 10, color: 'grey'}}>Podaj imię!</Text>
+                            <Button
+                                color='#D32F2F'
+                                onPress={() => this.closeModal()}
+                                title="Zamknij"
+                            >
+                            </Button>
+                        </View>
+                    </View>
+                </Modal>
                 <View
                     style={{ height: 24 }}>
                 </View>
@@ -66,7 +92,7 @@ export default class WelcomeScreen extends React.Component {
                         fontSize: 14,
                         textAlign: 'center',
                         marginTop: 10
-                    }}>Jako, że jesteś tu po raz pierwszy, musisz wybrać imię</Text>
+                    }}>Jako, że jesteś tu po raz pierwszy, musisz wybrać imię.</Text>
                     <TextInput
                         style={{ height: 40, marginTop: 15, padding: 10 }}
                         onChangeText={this.handleSetNameTextInput}
@@ -78,6 +104,11 @@ export default class WelcomeScreen extends React.Component {
                             title="Zapisz"
                         />
                     </View>
+                    <Text style={{
+                        fontSize: 10,
+                        textAlign: 'center',
+                        marginTop: 40
+                    }}>Na start dostajesz 10 000 PLN.</Text>
                 </View>
             </View>
         );
@@ -86,7 +117,6 @@ export default class WelcomeScreen extends React.Component {
     handleSetNameTextInput = (value) => {
         const player = {...this.state.player};
         player.name = value;
-        player.wallet.currencies[0].amount = 10000;
 
         this.setState({
             player: player
@@ -94,7 +124,12 @@ export default class WelcomeScreen extends React.Component {
     }
 
     handleCreatePlayerButton = () => {
+        if(this.state.player.name != ''){
         AsyncStorage.setItem('Player', JSON.stringify(this.state.player));
         this.props.launchApp(this.state.player);
+        }
+        else{
+            this.openModal();
+        }
     }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage, StyleSheet, Text, View, TextInput, Button, DeviceEventEmitter } from 'react-native';
+import { AsyncStorage, StyleSheet, Text, View, Modal, TextInput, Button, DeviceEventEmitter } from 'react-native';
 import {
     StackNavigator, TabNavigator
 } from 'react-navigation';
@@ -10,19 +10,55 @@ export default class SellCurrencyScreen extends React.Component {
 
         this.state = {
             player: this.props.screenProps.player,
-            amount: ''
+            amount: '',
+            modalVisible: false
         }
+        this.cryptocurrencyName = this.props.navigation.state.params.cryptocurrencyName;
+        this.cryptocurrencyPricePln = this.props.navigation.state.params.cryptocurrencyPricePln;
     }
 
     static navigationOptions = {
         title: 'Sprzedaj kryptowalutę',
     }
+    openModal() {
+        this.setState({ modalVisible: true });
+    }
 
+    closeModal() {
+        this.setState({ modalVisible: false });
+    }
     render() {
         return (
             <View>
-                <View
-                    style={{ height: 24 }}>
+                <Modal
+                    visible={this.state.modalVisible}
+                    animationType={'slide'}
+                    onRequestClose={() => this.closeModal()}
+                    transparent={true}
+                >
+                    <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1, }}>
+                        <View style={{
+                            width: 200, height: 140, backgroundColor: 'white', alignItems: 'center',
+                            justifyContent: 'center'
+                        }}>
+                            <Text style={{ textAlign: 'center', textAlignVertical: 'center', padding: 5, margin: 5, color: 'grey' }}>Nie masz wystarczającej ilości waluty w portfelu!</Text>
+                            <Button
+                                color='#D32F2F'
+                                onPress={() => this.closeModal()}
+                                title="Zamknij"
+                            >
+                            </Button>
+                        </View>
+                    </View>
+                </Modal>
+                <View style={{ paddingLeft: 15, paddingRight: 15 }}>
+                    <Text style={{
+                        fontSize: 16,
+                        fontWeight: 'bold',
+                        textAlign: 'center',
+                        marginTop: 6,
+                        marginBottom: 6
+                    }} >{this.cryptocurrencyName}:  {this.cryptocurrencyPricePln} PLN </Text>
                 </View>
                 <View style={{ paddingLeft: 15, paddingRight: 15 }}>
                     <Text style={{
@@ -34,8 +70,8 @@ export default class SellCurrencyScreen extends React.Component {
                     <TextInput
                         style={{ height: 40, marginTop: 15, padding: 10 }}
                         keyboardType='numeric'
-                        onChangeText={(value) => this.setState({ 
-                            amount: value 
+                        onChangeText={(value) => this.setState({
+                            amount: value
                         })}
                         value={this.state.amount}
                     />
@@ -52,29 +88,30 @@ export default class SellCurrencyScreen extends React.Component {
     }
 
     handleSellCurrencyButton = () => {
-        const { navigate } = this.props.navigation;
+        const { goBack } = this.props.navigation;
 
         const player = { ...this.state.player };
-        const cryptocurrencyName = this.props.navigation.state.params.cryptocurrencyName;
-        const cryptocurrencyPricePln = this.props.navigation.state.params.cryptocurrencyPricePln;
-
-        player.wallet.currencies[0].amount += (parseInt(this.state.amount) * cryptocurrencyPricePln);
 
         player.wallet.cryptocurrencies.map((cryptocurrency, key) => {
-            if (cryptocurrency.name == cryptocurrencyName) {
-                cryptocurrency.amount -= parseInt(this.state.amount);
+            if (cryptocurrency.name == this.cryptocurrencyName) {
+                if (cryptocurrency.amount - parseInt(this.state.amount) >= 0) {
+                    cryptocurrency.amount -= parseInt(this.state.amount);
+                    player.wallet.currencies[0].amount += (parseInt(this.state.amount) * this.cryptocurrencyPricePln);
+                    this.setState({
+                        player: player
+                    });
+                    AsyncStorage.setItem('Player', JSON.stringify(this.state.player));
+
+                    DeviceEventEmitter.emit('refreshWallet', {});
+
+                    goBack();
+
+                }
+                else {
+                    this.openModal();
+                }
 
             }
         });
-
-        this.setState({
-            player: player
-        });
-
-        AsyncStorage.setItem('Player', JSON.stringify(this.state.player));
-        
-        DeviceEventEmitter.emit('refreshWallet',  {});
-
-        goBack();
     }
 }
