@@ -18,7 +18,7 @@ export default class ExchangeScreen extends React.Component {
                 <View key={key} style={{ height: 88, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingLeft: 16, paddingRight: 16, borderBottomWidth: 1, borderBottomColor: '#ececec' }}>
                     <View>
                         <Text style={{ fontSize: 16 }}>{cryptocurrency.name}</Text>
-                        <Text style={{ fontSize: 14 }}>{cryptocurrency.pricePln} PLN</Text>
+                        <Text style={{ fontSize: 14 }}>{parseFloat(cryptocurrency.pricePln).toFixed(2)} PLN</Text>
                         <Text style={{ color: 'rgba(0, 0, 0, .54)', fontSize: 14 }}>{moment(cryptocurrency.updatedDate).format('dddd, H:mm:ss')}</Text>
                     </View>
 

@@ -37,9 +37,11 @@ export default class BuyCurrencyScreen extends React.Component {
                     transparent={true}
                 >
                     <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1, }}>
-                        <View style={{ width: 200, height: 140, backgroundColor: 'white', alignItems: 'center', 
-                                        justifyContent: 'center'}}>
-                            <Text style={{textAlign: 'center', textAlignVertical: 'center', padding:5, margin: 10, color: 'grey'}}>Nie masz wystarczającej ilości środków w portfelu!</Text>
+                        <View style={{
+                            width: 200, height: 140, backgroundColor: 'white', alignItems: 'center',
+                            justifyContent: 'center'
+                        }}>
+                            <Text style={{ textAlign: 'center', textAlignVertical: 'center', padding: 5, margin: 10, color: 'grey' }}>Nie masz wystarczającej ilości środków w portfelu!</Text>
                             <Button
                                 color='#D32F2F'
                                 onPress={() => this.closeModal()}
@@ -74,6 +76,7 @@ export default class BuyCurrencyScreen extends React.Component {
                     />
                     <View style={{ marginTop: 15 }}>
                         <Button
+                            color='#D32F2F'
                             onPress={this.handleBuyCurrencyButton}
                             title="Kup"
                         />

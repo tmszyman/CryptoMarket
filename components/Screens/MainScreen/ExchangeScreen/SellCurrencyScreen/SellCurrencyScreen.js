@@ -78,6 +78,7 @@ export default class SellCurrencyScreen extends React.Component {
 
                     <View style={{ marginTop: 15 }}>
                         <Button
+                            color='#D32F2F'
                             onPress={this.handleSellCurrencyButton}
                             title="Sprzedaj"
                         />

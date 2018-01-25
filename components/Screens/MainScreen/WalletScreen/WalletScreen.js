@@ -21,12 +21,12 @@ export default class WalletScreen extends React.Component {
 
     render() {
         const listCryptocurrencies = this.state.player.wallet.cryptocurrencies.map((cryptocurrency, key) => {
-            let icon = 'https://files.coinmarketcap.com/static/img/coins/64x64/'+cryptocurrency.name.toLowerCase()+'.png';   
+            let icon = 'https://files.coinmarketcap.com/static/img/coins/64x64/' + cryptocurrency.name.toLowerCase() + '.png';
             return (
-                
-                <View key={key} style={{ height: 60, justifyContent: 'flex-start', flexDirection: 'row', padding: 5 , alignItems:'center'}}>
-                    <Image source={{ uri: icon }} style={{ width: 40, height: 40, borderRadius: 50}} />
-                    <Text style={{ fontSize: 18, textAlignVertical: 'center', marginLeft: 10, borderBottomWidth: 1, borderBottomColor: '#ececec'}}>{cryptocurrency.name}: {cryptocurrency.amount}</Text>
+
+                <View key={key} style={{ height: 56, justifyContent: 'flex-start', flexDirection: 'row', padding: 5, alignItems: 'center' }}>
+                    <Image source={{ uri: icon }} style={{ width: 40, height: 40, borderRadius: 50 }} />
+                    <Text style={{ fontSize: 16, textAlignVertical: 'center', marginLeft: 16 }}>{cryptocurrency.name}: {parseFloat(cryptocurrency.amount).toFixed(2)}</Text>
                 </View>
             );
         });
@@ -38,7 +38,7 @@ export default class WalletScreen extends React.Component {
                         <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Witaj, {this.state.player.name}</Text>
                         <View style={{ flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center' }}>
                             <Text style={{ fontSize: 12 }}>Twoje saldo:</Text>
-                            <Text style={{ fontSize: 12 }}>{this.state.player.wallet.currencies[0].amount} {this.props.screenProps.player.wallet.currencies[0].name}</Text>
+                            <Text style={{ fontSize: 12 }}>{parseFloat(this.state.player.wallet.currencies[0].amount).toFixed(2)} {this.props.screenProps.player.wallet.currencies[0].name}</Text>
                         </View>
                     </View>
                     <View style={{ paddingTop: 8, paddingLeft: 16, paddingRight: 16, flexDirection: 'column' }}>
