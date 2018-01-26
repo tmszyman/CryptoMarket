@@ -12,7 +12,7 @@ export default class BuyCurrencyScreen extends React.Component {
             player: this.props.screenProps.player,
             amount: '',
             modalVisible: false,
-            transactionValue: '' // TEST CZY DZIALA LICZENIE ASYNC KWOTY
+            transactionValue: ''
         }
         this.cryptocurrencyName = this.props.navigation.state.params.cryptocurrencyName;
         this.cryptocurrencyPricePln = this.props.navigation.state.params.cryptocurrencyPricePln;
@@ -105,6 +105,8 @@ export default class BuyCurrencyScreen extends React.Component {
             AsyncStorage.setItem('Player', JSON.stringify(this.state.player));
 
             DeviceEventEmitter.emit('refreshWallet', {});
+
+            DeviceEventEmitter.emit('checkTasks', {});
 
             goBack();
         }

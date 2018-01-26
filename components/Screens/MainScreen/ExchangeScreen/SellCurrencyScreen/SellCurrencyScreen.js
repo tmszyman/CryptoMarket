@@ -105,6 +105,8 @@ export default class SellCurrencyScreen extends React.Component {
                     AsyncStorage.setItem('Player', JSON.stringify(this.state.player));
 
                     DeviceEventEmitter.emit('refreshWallet', {});
+                    
+                    DeviceEventEmitter.emit('checkTasks', {});
 
                     goBack();
 

@@ -102,7 +102,7 @@ export default class WelcomeScreen extends React.Component {
                         selectionColor='rgba(0, 0, 0, 0.2)'
                         autoCorrect={false}
                     />
-                    <View style={{ marginTop: 15 }}>
+                    <View style={{ paddingLeft: 100, paddingRight: 100, marginTop: 15 }}>
                         <Button
                             onPress={this.handleCreatePlayerButton}
                             color='#D32F2F'
