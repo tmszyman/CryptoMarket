@@ -29,29 +29,27 @@ export default class BuyCurrencyScreen extends React.Component {
     }
     render() {
         return (
-            <View>
+            <View style={{ flex: 1}}>
                 <Modal
                     visible={this.state.modalVisible}
                     animationType={'slide'}
                     onRequestClose={() => this.closeModal()}
-                    transparent={true}
-                >
-                    <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1, }}>
+                    transparent={true}>
+                    <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1, padding: 20 }}>
                         <View style={{
-                            width: 200, height: 140, backgroundColor: 'white', alignItems: 'center',
-                            justifyContent: 'center'
+                            backgroundColor: '#D32F2F', alignItems: 'center', justifyContent: 'center', padding: 15
                         }}>
-                            <Text style={{ textAlign: 'center', textAlignVertical: 'center', padding: 5, margin: 10, color: 'grey' }}>Nie masz wystarczającej ilości środków w portfelu!</Text>
+                            <Text style={{ textAlign: 'center', textAlignVertical: 'center', color: '#fff', marginBottom: 20 }}>Nie masz wystarczającej ilości środków w portfelu!</Text>
                             <Button
-                                color='#D32F2F'
+                                color='#20232a'
                                 onPress={() => this.closeModal()}
                                 title="Zamknij"
-                            >
+                                >
                             </Button>
                         </View>
                     </View>
                 </Modal>
-                <View style={{ paddingLeft: 15, paddingRight: 15 }}>
+                <View style={{ flex: 1, backgroundColor: '#fff', paddingTop: 30, paddingLeft: 16, paddingRight: 16 }}>
                     <Text style={{
                         fontSize: 16,
                         fontWeight: 'bold',
@@ -59,22 +57,23 @@ export default class BuyCurrencyScreen extends React.Component {
                         marginTop: 6,
                         marginBottom: 6
                     }} >{this.cryptocurrencyName}:  {this.cryptocurrencyPricePln} PLN {this.transactionValue}</Text>
-                </View>
-                <View style={{ paddingLeft: 15, paddingRight: 15 }}>
                     <Text style={{
                         fontSize: 16,
                         textAlign: 'center',
-                        marginTop: 10
+                        marginTop: 30
                     }}>Wprowadź ilość</Text>
                     <TextInput
-                        style={{ height: 40, marginTop: 15, padding: 10 }}
+                        style={{ height: 40, color: '#000', marginTop: 15, padding: 10 }}
                         keyboardType='numeric'
+                        underlineColorAndroid='rgba(0, 0, 0, 1)'
+                        selectionColor='rgba(0, 0, 0, 0.2)'
+                        autoCorrect={false}
                         onChangeText={(value) => this.setState({
                             amount: value,
                             transactionValue: value * this.cryptocurrencyPricePln
                         })}
                     />
-                    <View style={{ marginTop: 15 }}>
+                    <View style={{ paddingLeft: 100, paddingRight: 100, marginTop: 15 }}>
                         <Button
                             color='#D32F2F'
                             onPress={this.handleBuyCurrencyButton}
