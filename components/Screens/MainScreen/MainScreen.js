@@ -5,6 +5,7 @@ import {
 } from 'react-navigation';
 import WalletNav from './WalletScreen/WalletNav';
 import ExchangeNav from './ExchangeScreen/ExchangeNav';
+import TasksNav from './TasksScreen/TasksNav';
 
 export default class MainScreen extends React.Component {
     constructor(props) {
@@ -86,6 +87,9 @@ export default class MainScreen extends React.Component {
             },
             Exchange: {
                 screen: ExchangeNav,
+            },
+            Tasks: {
+                screen: TasksNav,
             },
         }, {
                 tabBarPosition: 'top',
